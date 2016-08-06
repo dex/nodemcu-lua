@@ -1,11 +1,11 @@
 --
--- rgb_lcd.cpp
--- 2013 Copyright (c) Seeed Technology Inc.  All right reserved.
+-- rgb_lcd.lua
 --
--- Author:Loovee
--- 2013-9-18
+-- Author: Dex Chen
+-- 2016-8-6
 --
--- add rgb backlight fucnction @ 2013-10-15
+-- LUA script version of rgb LCD
+-- Based on Loovee's cpp version 
 -- 
 -- The MIT License (MIT)
 --
