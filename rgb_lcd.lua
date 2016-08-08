@@ -112,6 +112,10 @@ local delayMicroseconds = function(ms)
     tmr.delay(ms)
 end
 
+local setup = function(self, sda, scl)
+    i2c.setup(0, sda, scl, i2c.SLOW)
+end
+
 local begin = function(self, cols, lines, dotsize) 
 
     --Wire.begin();
@@ -190,9 +194,9 @@ end
 
 local setCursor = function(self, col, row)
     if row == 0 then
-	col = bit.bor(col, 0x80)
+        col = bit.bor(col, 0x80)
     else
-	col = bit.bor(col, 0xc0)
+        col = bit.bor(col, 0xc0)
     end
     local dta = {0x80, col}
 
@@ -272,7 +276,8 @@ local createChar = function(self, location, charmap)
     self:command(bit.bor(lcd_def.LCD_SETCGRAMADDR, bit.lshift(location, 3)))
     
     local dta = {0x40}
-    for i = 0,7 do dta[#dta+1] = charmap[i] end
+    local i
+    for i = 1,8 do dta[#dta+1] = charmap[i] end
     i2c_send_byteS(unpack(dta))
 end
 
@@ -333,9 +338,9 @@ local setColorWhite = function(self)
 end
 
 local print = function(self, str)
+    local i
     for i = 1, #str do
-	c = str:sub(i,i)
-	self:write(c)
+        self:write(str:sub(i,i))
     end
 end
 
@@ -351,6 +356,7 @@ end
 local meta = {
   __index = {
       init = init,
+      setup = setup,
       begin = begin,
       clear = clear,
       home = home,
